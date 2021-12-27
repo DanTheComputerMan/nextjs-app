@@ -1,5 +1,5 @@
 function Test() {
-    return <div>This is a test page.</div>
+    return <div>This CG's test page.</div>
 }
 
 export default Test;
