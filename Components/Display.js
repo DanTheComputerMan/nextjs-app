@@ -1,7 +1,9 @@
+import classes from "./StyledElements/Display.module.css";
+
 function Display(props) {
-    return <div name={props.name} style={{
-        textAlign: 'center'
-    }}>{props.name}</div>
+    return <div className={classes.Display} name={props.name}>
+        {props.name}
+    </div>
 }
 
 export default Display;

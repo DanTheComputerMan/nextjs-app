@@ -1,0 +1,19 @@
+/* .buttonsRowTop {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0px;
+    background: #eee;
+}
+
+.buttonsRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 0px;
+    background: #eee;
+} */
+
+.buttonsRow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: #eee;
+}

@@ -1,0 +1,8 @@
+.EqualsKey {
+    background: #94c4e4;
+    border:none;
+}
+
+.EqualsKey:focus, .EqualsKey:hover, .EqualsKey:active {
+    background-color: #398DCF;
+}

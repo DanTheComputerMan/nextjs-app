@@ -1,0 +1,15 @@
+.Display {
+    /* width: 17%; */
+    justify-content: center;
+    border: 1px maroon solid;
+    text-align: right;
+    color: darkgray;
+    text-shadow: 1px 1px lightgray;
+    margin: auto;
+    /* padding: 10px; */
+}
+
+.Display > div {
+    width: 50%;
+    justify-content: center;
+}

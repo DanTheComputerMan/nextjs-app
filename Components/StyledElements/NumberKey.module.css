@@ -1,0 +1,7 @@
+.NumberKey {
+    font-weight: bold;
+}
+
+.NumberKey:focus, .NumberKey:hover, .NumberKey:active {
+    color: goldenrod;
+}

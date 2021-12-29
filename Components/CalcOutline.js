@@ -5,6 +5,10 @@
 import React from "react";
 import Display from "../Components/Display";
 import Button from "../Components/Button";
+import NumberButton from "../Components/NumberButton";
+import EqualsButton from "../Components/EqualsButton";
+
+import classes from "../Components/StyledElements/ButtonRows.module.css";
 
 class CalcOutline extends React.Component {
     constructor() {
@@ -24,7 +28,7 @@ class CalcOutline extends React.Component {
         let secnum = this.state.secondNumber || this.state.firstNumber;
         if (this.state.stage === 2) { // 2nd number mode.
             switch (this.state.operator) {
-                case "/":
+                case "÷":
                     result = this.state.firstNumber / secnum; break;
                 case "*":
                     result = this.state.firstNumber * secnum; break;
@@ -60,6 +64,8 @@ class CalcOutline extends React.Component {
         const { name } = event.target;
         // console.log(name);
         switch (name) {
+            case "NA":
+                break;
             case "CE":
                 this.setState({
                     display: 0,
@@ -84,7 +90,7 @@ class CalcOutline extends React.Component {
                     }
                 });
                 break;
-            case "/":
+            case "÷":
             case "*":
             case "-":
             case "+":
@@ -92,7 +98,7 @@ class CalcOutline extends React.Component {
                     return this.setState(prevState => {
                         let _val;
                         switch(prevState.operator) {
-                            case "/":
+                            case "÷":
                                 _val = prevState.firstNumber / prevState.secondNumber; break;
                             case "*":
                                 _val = prevState.firstNumber * prevState.secondNumber; break;
@@ -228,17 +234,69 @@ class CalcOutline extends React.Component {
     
     render() {
         return (
-        <div>
+        <div style={{
+            justifyContent: "center",
+            // minWidth: "12%",
+            // maxWidth: "12%"
+            width: "178px",
+            margin: "auto",
+            padding: "12.5%"
+        }}>
             {/* <button onClick={() => console.log(this.state.history)}>History</button><br /> */}
             <Display name={this.state.display}/><br />
-            <Button name="CE" onClick={this.handleClick}/><Button name="x2" modifiers={{pow:true}} onClick={this.handleClick}/><Button name="←" onClick={this.handleClick}/><br />
-            <Button name="n!" onClick={this.handleClick}/><Button name="±" onClick={this.handleClick}/><Button name="%" onClick={this.handleClick}/><br />
-            <Button name="7" onClick={this.handleClick}/><Button name="8" onClick={this.handleClick}/><Button name="9" onClick={this.handleClick}/><Button name="/" onClick={this.handleClick}/><br />
-            <Button name="4" onClick={this.handleClick}/><Button name="5" onClick={this.handleClick}/><Button name="6" onClick={this.handleClick}/><Button name="*" onClick={this.handleClick}/><br />
-            <Button name="1" onClick={this.handleClick}/><Button name="2" onClick={this.handleClick}/><Button name="3" onClick={this.handleClick}/><Button name="-" onClick={this.handleClick}/><br />
-            <Button name="." onClick={this.handleClick}/><Button name="0" onClick={this.handleClick}/><Button name="=" onClick={this.handleClick}/><Button name="+" onClick={this.handleClick}/><br />
-            <br />
-            {/* <div>
+            <div className={this.props.className}>
+                <div className={classes.buttonsRow}>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="NA" onClick={this.handleClick}/>
+                </div>
+                <div className={classes.buttonsRow}>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="CE" onClick={this.handleClick}/>
+                    <Button name="x2" modifiers={{pow:true}} onClick={this.handleClick}/>
+                    <Button name="←" onClick={this.handleClick}/>
+                </div>
+                <div className={classes.buttonsRow}>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="%" onClick={this.handleClick}/>
+                    <Button name="n!" onClick={this.handleClick}/>
+                    <Button name="÷" onClick={this.handleClick}/>
+                </div>
+                <div className={classes.buttonsRow}>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <NumberButton name="7" onClick={this.handleClick}/>
+                    <NumberButton name="8" onClick={this.handleClick}/>
+                    <NumberButton name="9" onClick={this.handleClick}/>
+                    <Button name="*" onClick={this.handleClick}/>
+                </div>
+                <div className={classes.buttonsRow}>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <NumberButton name="4" onClick={this.handleClick}/>
+                    <NumberButton name="5" onClick={this.handleClick}/>
+                    <NumberButton name="6" onClick={this.handleClick}/>
+                    <Button name="-" onClick={this.handleClick}/>
+                </div>
+                <div className={classes.buttonsRow}>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <NumberButton name="1" onClick={this.handleClick}/>
+                    <NumberButton name="2" onClick={this.handleClick}/>
+                    <NumberButton name="3" onClick={this.handleClick}/>
+                    <Button name="+" onClick={this.handleClick}/>
+                </div>
+                <div className={classes.buttonsRow}>
+                    <Button name="NA" onClick={this.handleClick}/>
+                    <NumberButton name="±" onClick={this.handleClick}/>
+                    <NumberButton name="0" onClick={this.handleClick}/>
+                    <NumberButton name="." onClick={this.handleClick}/>
+                    <EqualsButton name="=" onClick={this.handleClick}/>
+                </div>
+            </div>
+            {/* <br />
+            <div>
                 display: {this.state.display}<br />
                 firstNumber: {this.state.firstNumber}<br />
                 secondNumber: {this.state.secondNumber}<br />
