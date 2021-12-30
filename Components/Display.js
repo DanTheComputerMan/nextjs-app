@@ -2,7 +2,8 @@ import classes from "./StyledElements/Display.module.css";
 
 function Display(props) {
     console.log(props);
-    const obj = (props.modes.exponent || (''+props.name).length > 21) ? {
+    // const obj = (props.modes.exponent || (''+props.name).length > 21) ? {
+    const obj = (props.modes.exponent || (''+props.name).length >= 20) ? {
         notation: 'scientific'
     } : {
         maximumSignificantDigits: 16

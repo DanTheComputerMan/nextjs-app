@@ -1,12 +1,19 @@
+@font-face {
+    font-family: 'calculator';
+    src: url('../../Fonts/digital-7.ttf') format('truetype');
+}
+
 .Display {
     /* width: 17%; */
     justify-content: center;
     border: 1px maroon solid;
+    border-radius: 3px;
     text-align: right;
     color: darkgray;
     text-shadow: 1px 1px lightgray;
-    margin: auto;
-    /* padding: 10px; */
+    margin: 3px;
+    font-family: 'calculator';
+    padding: 4px;
 }
 
 .Display > div {

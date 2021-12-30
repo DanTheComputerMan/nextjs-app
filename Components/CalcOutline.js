@@ -34,7 +34,7 @@ class CalcOutline extends React.Component {
             switch (this.state.operator) {
                 case "÷":
                     result = this.state.firstNumber / secnum; break;
-                case "x":
+                case "×":
                     result = this.state.firstNumber * secnum; break;
                 case "-":
                     result = this.state.firstNumber - secnum; break;
@@ -98,7 +98,7 @@ class CalcOutline extends React.Component {
                 });
                 break;
             case "÷":
-            case "x":
+            case "×":
             case "-":
             case "+":
             case "ᵐᵒᵈ":
@@ -109,7 +109,7 @@ class CalcOutline extends React.Component {
                         switch(prevState.operator) {
                             case "÷":
                                 _val = prevState.firstNumber / prevState.secondNumber; break;
-                            case "x":
+                            case "×":
                                 _val = prevState.firstNumber * prevState.secondNumber; break;
                             case "-":
                                 _val = prevState.firstNumber - prevState.secondNumber; break;
@@ -366,7 +366,7 @@ class CalcOutline extends React.Component {
             padding: "12.5%"
         }}>
             {/* <button onClick={() => console.log(this.state.history)}>History</button><br /> */}
-            <Display name={this.state.display} modes={this.state.modes}/><br />
+            <Display name={this.state.display} modes={this.state.modes}/>
             <div className={this.props.className}>
                 <div className={classes.buttonsRow}>
                     <Button name="NA" onClick={this.handleClick}/>
@@ -394,7 +394,7 @@ class CalcOutline extends React.Component {
                     <NumberButton name="7" onClick={this.handleClick}/>
                     <NumberButton name="8" onClick={this.handleClick}/>
                     <NumberButton name="9" onClick={this.handleClick}/>
-                    <Button name="x" onClick={this.handleClick}/>
+                    <Button name="×" onClick={this.handleClick}/>
                 </div>
                 <div className={classes.buttonsRow}>
                     <Button name="10x" modifiers={{pow:true, index:2}} onClick={this.handleClick}/>
