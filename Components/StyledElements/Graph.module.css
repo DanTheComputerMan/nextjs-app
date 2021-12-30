@@ -1,0 +1,26 @@
+.graph {
+    /* top right? bottom left */
+    /* margin: 0 0 0 0; */
+    /* padding: 0 0 0 0; */
+    margin: 2px 0 0 0;
+    width: 100%;
+    height: 100%;
+    border: 1px maroon solid;
+}
+
+.functionBox {
+    width: 97%;
+    margin: 0 0 2px 0;
+    color: rgb(100, 100, 100);
+}
+
+.invalidFunctionBox {
+    width: 98%;
+    margin: 0 0 3px 0;
+    background-color: pink;
+    border: 1px red solid;
+}
+
+.functionBox::placeholder {
+    /* color: red; */
+}

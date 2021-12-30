@@ -2,6 +2,7 @@
     background: #94c4e4;
     font-size: 24px;
     border:none;
+    border-radius: 3px;
 }
 
 .EqualsKey:focus, .EqualsKey:hover, .EqualsKey:active {

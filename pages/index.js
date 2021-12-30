@@ -10,8 +10,12 @@ function Home() {
       <Head>
         <title>Calculator App</title>
         <link rel="icon" href="/favicon.ico" />
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/0.15.0/math.min.js" />
+        <script>
+          
+        </script>
       </Head>
-
+      
       <CalcOutline className={classes.grid}/>
       
       <style jsx global>{`
