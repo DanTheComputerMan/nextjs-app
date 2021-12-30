@@ -1,7 +1,0 @@
-.FourFunctions {
-    color: #aaa;
-}
-
-.FourFunctions:focus, .FourFunctions:hover, .FourFunctions:active {
-    color: green;
-}

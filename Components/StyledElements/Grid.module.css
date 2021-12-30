@@ -1,12 +1,12 @@
 .grid {
     display: grid;
     justify-content: center;
-    row-gap: 0.1em;
+    row-gap: 0.05em;
 }
 .grid > div {
     background: #eee;
-    column-gap: 0.1em;
+    column-gap: 0.05em;
 }
-.grid > div:nth-child(odd) {
+/* .grid > div:nth-child(odd) {
     background: #ddd;
-}
+} */

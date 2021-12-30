@@ -1,5 +1,8 @@
 .NumberKey {
     font-weight: bold;
+    background-color: #FCFCFC;
+    border: 1px lightgray solid;
+    border-radius: 3px;
 }
 
 .NumberKey:focus, .NumberKey:hover, .NumberKey:active {

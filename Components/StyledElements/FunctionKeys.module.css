@@ -1,0 +1,20 @@
+.FourFunctions {
+    color: rgb(112, 112, 112);
+    font-size: 24px;
+    border: 1px lightgray solid;
+    border-radius: 2px;
+}
+
+.FunctionKeys {
+    color: #000;
+    border: 1px lightgray solid;
+    border-radius: 2px;
+}
+
+.FourFunctions:focus, .FourFunctions:hover, .FourFunctions:active,
+.FunctionKeys:focus, .FunctionKeys:hover, .FunctionKeys:active {
+    color: goldenrod;
+}
+/* .FourFunctions:focus, .FourFunctions:hover, .FourFunctions:active {
+    color: green;
+} */

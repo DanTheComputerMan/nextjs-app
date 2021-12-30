@@ -19,7 +19,11 @@ class CalcOutline extends React.Component {
             stage: 1,
             secondNumber: null,
             operator: null,
-            history: []
+            history: [],
+            modes: {
+                exponent: false,
+                parenthesis: 0 // how many left parenthesis have been used.
+            }
         };
     }
     
@@ -30,12 +34,16 @@ class CalcOutline extends React.Component {
             switch (this.state.operator) {
                 case "÷":
                     result = this.state.firstNumber / secnum; break;
-                case "*":
+                case "x":
                     result = this.state.firstNumber * secnum; break;
                 case "-":
                     result = this.state.firstNumber - secnum; break;
                 case "+":
                     result = Number(this.state.firstNumber) + Number(secnum); break; // b/c of js interaction with + with numbers and strings.
+                case "ᵐᵒᵈ":
+                    result = this.state.firstNumber % secnum; break;
+                case "xy":
+                    result = this.state.firstNumber ** secnum; break;
                 // default: // operator doesn't exist.
                 //     return this.state.display;
             }
@@ -57,7 +65,6 @@ class CalcOutline extends React.Component {
                 history: _arr
             }
         });
-        // return result || this.state.display; // first number only, operator doesn't exist, and general catch all.
     }
     
     handleClick = (event) => {
@@ -91,21 +98,27 @@ class CalcOutline extends React.Component {
                 });
                 break;
             case "÷":
-            case "*":
+            case "x":
             case "-":
             case "+":
+            case "ᵐᵒᵈ":
+            case "xy":
                 if (this.state.operator) { // to chain operators, 5 + 3 + 9 + 10 / 2
                     return this.setState(prevState => {
                         let _val;
                         switch(prevState.operator) {
                             case "÷":
                                 _val = prevState.firstNumber / prevState.secondNumber; break;
-                            case "*":
+                            case "x":
                                 _val = prevState.firstNumber * prevState.secondNumber; break;
                             case "-":
                                 _val = prevState.firstNumber - prevState.secondNumber; break;
                             case "+":
                                 _val = Number(prevState.firstNumber) + Number(prevState.secondNumber); break;
+                            case "ᵐᵒᵈ":
+                                _val = prevState.firstNumber % prevState.secondNumber; break;
+                            case "xy":
+                                _val = prevState.firstNumber ** prevState.secondNumber; break;
                         }
                         return {
                             display: _val,
@@ -140,6 +153,34 @@ class CalcOutline extends React.Component {
                     }
                 });
                 break;
+            case "π":
+                this.setState(prevState => {
+                    if (prevState.secondNumber) {
+                        return {
+                            display: Math.PI,
+                            secondNumber: Math.PI
+                        }
+                    }
+                    return {
+                        display: Math.PI,
+                        firstNumber: Math.PI
+                    }
+                });
+                break;
+            case "e":
+                this.setState(prevState => {
+                    if (prevState.secondNumber) {
+                        return {
+                            display: Math.E,
+                            secondNumber: Math.E
+                        }
+                    }
+                    return {
+                        display: Math.E,
+                        firstNumber: Math.E
+                    }
+                });
+                break;
             case "x2":
                 this.setState(prevState => {
                     if (prevState.secondNumber) {
@@ -151,6 +192,43 @@ class CalcOutline extends React.Component {
                     return {
                         display: prevState.display**2,
                         firstNumber: prevState.firstNumber**2
+                    }
+                });
+                break;
+            case "1/x":
+                this.setState(prevState => {
+                    if (prevState.secondNumber) {
+                        return {
+                            display: 1/prevState.display,
+                            secondNumber: 1/prevState.secondNumber
+                        }
+                    }
+                    return {
+                        display: 1/prevState.display,
+                        firstNumber: 1/prevState.firstNumber
+                    }
+                });
+                break;
+            case "|x|":
+                this.setState(prevState => {
+                    if (prevState.secondNumber) {
+                        return {
+                            display: Math.abs(prevState.display),
+                            secondNumber: Math.abs(prevState.secondNumber)
+                        }
+                    }
+                    return {
+                        display: Math.abs(prevState.display),
+                        firstNumber: Math.abs(prevState.firstNumber)
+                    }
+                });
+                break;
+            case "exp":
+                this.setState((prevState) => {
+                    let modes = prevState.modes;
+                    modes.exponent = !prevState.modes.exponent;
+                    return {
+                        modes: modes
                     }
                 });
                 break;
@@ -187,17 +265,62 @@ class CalcOutline extends React.Component {
                     }
                 });
                 break;
-            case "%":
+            case "2√x":
                 this.setState(prevState => {
                     if (prevState.secondNumber) {
                         return {
-                            display: prevState.display / 100,
-                            secondNumber: prevState.secondNumber / 100
+                            display: Math.sqrt(prevState.display),
+                            secondNumber: Math.sqrt(prevState.secondNumber)
                         }
                     }
                     return {
-                        display: prevState.display / 100,
-                        firstNumber: prevState.firstNumber / 100
+                        display: Math.sqrt(prevState.display),
+                        firstNumber: Math.sqrt(prevState.firstNumber)
+                    }
+                });
+                break;
+            case "10x":
+                this.setState(prevState => {
+                    const pow = 10**(prevState.secondNumber || prevState.firstNumber);
+                    if (prevState.secondNumber) {
+                        return {
+                            display: pow,
+                            secondNumber: pow
+                        }
+                    }
+                    return {
+                        display: pow,
+                        firstNumber: pow
+                    }
+                });
+                break;
+            case "log":
+                this.setState(prevState => {
+                    const log = Math.log(prevState.secondNumber || prevState.firstNumber) / Math.log(10);
+                    if (prevState.secondNumber) {
+                        return {
+                            display: log,
+                            secondNumber: log
+                        }
+                    }
+                    return {
+                        display: log,
+                        firstNumber: log
+                    }
+                });
+                break;
+            case "ln":
+                this.setState(prevState => {
+                    const log = Math.log(prevState.secondNumber || prevState.firstNumber); // technically also "/ Math.log(Math.E)" but that = 1
+                    if (prevState.secondNumber) {
+                        return {
+                            display: log,
+                            secondNumber: log
+                        }
+                    }
+                    return {
+                        display: log,
+                        firstNumber: log
                     }
                 });
                 break;
@@ -243,52 +366,52 @@ class CalcOutline extends React.Component {
             padding: "12.5%"
         }}>
             {/* <button onClick={() => console.log(this.state.history)}>History</button><br /> */}
-            <Display name={this.state.display}/><br />
+            <Display name={this.state.display} modes={this.state.modes}/><br />
             <div className={this.props.className}>
                 <div className={classes.buttonsRow}>
                     <Button name="NA" onClick={this.handleClick}/>
-                    <Button name="NA" onClick={this.handleClick}/>
-                    <Button name="NA" onClick={this.handleClick}/>
-                    <Button name="NA" onClick={this.handleClick}/>
-                    <Button name="NA" onClick={this.handleClick}/>
-                </div>
-                <div className={classes.buttonsRow}>
-                    <Button name="NA" onClick={this.handleClick}/>
-                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="π" onClick={this.handleClick}/>
+                    <Button name="e" onClick={this.handleClick}/>
                     <Button name="CE" onClick={this.handleClick}/>
-                    <Button name="x2" modifiers={{pow:true}} onClick={this.handleClick}/>
                     <Button name="←" onClick={this.handleClick}/>
                 </div>
                 <div className={classes.buttonsRow}>
+                    <Button name="x2" modifiers={{pow:true, index:1}} onClick={this.handleClick}/>
+                    <Button name="1/x" onClick={this.handleClick}/>
+                    <Button name="|x|" onClick={this.handleClick}/>
+                    <Button name="exp" onClick={this.handleClick}/>
+                    <Button name="ᵐᵒᵈ" onClick={this.handleClick}/>
+                </div>
+                <div className={classes.buttonsRow}>
+                    <Button name="2√x" onClick={this.handleClick}/>
                     <Button name="NA" onClick={this.handleClick}/>
                     <Button name="NA" onClick={this.handleClick}/>
-                    <Button name="%" onClick={this.handleClick}/>
                     <Button name="n!" onClick={this.handleClick}/>
                     <Button name="÷" onClick={this.handleClick}/>
                 </div>
                 <div className={classes.buttonsRow}>
-                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="xy" modifiers={{pow:true, index:1}} onClick={this.handleClick}/>
                     <NumberButton name="7" onClick={this.handleClick}/>
                     <NumberButton name="8" onClick={this.handleClick}/>
                     <NumberButton name="9" onClick={this.handleClick}/>
-                    <Button name="*" onClick={this.handleClick}/>
+                    <Button name="x" onClick={this.handleClick}/>
                 </div>
                 <div className={classes.buttonsRow}>
-                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="10x" modifiers={{pow:true, index:2}} onClick={this.handleClick}/>
                     <NumberButton name="4" onClick={this.handleClick}/>
                     <NumberButton name="5" onClick={this.handleClick}/>
                     <NumberButton name="6" onClick={this.handleClick}/>
                     <Button name="-" onClick={this.handleClick}/>
                 </div>
                 <div className={classes.buttonsRow}>
-                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="log" onClick={this.handleClick}/>
                     <NumberButton name="1" onClick={this.handleClick}/>
                     <NumberButton name="2" onClick={this.handleClick}/>
                     <NumberButton name="3" onClick={this.handleClick}/>
                     <Button name="+" onClick={this.handleClick}/>
                 </div>
                 <div className={classes.buttonsRow}>
-                    <Button name="NA" onClick={this.handleClick}/>
+                    <Button name="ln" onClick={this.handleClick}/>
                     <NumberButton name="±" onClick={this.handleClick}/>
                     <NumberButton name="0" onClick={this.handleClick}/>
                     <NumberButton name="." onClick={this.handleClick}/>

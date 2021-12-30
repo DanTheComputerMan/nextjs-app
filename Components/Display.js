@@ -1,8 +1,14 @@
 import classes from "./StyledElements/Display.module.css";
 
 function Display(props) {
+    console.log(props);
+    const obj = (props.modes.exponent || (''+props.name).length > 21) ? {
+        notation: 'scientific'
+    } : {
+        maximumSignificantDigits: 16
+    };
     return <div className={classes.Display} name={props.name}>
-        {props.name}
+        {Number(props.name).toLocaleString('en-US', obj)}
     </div>
 }
 
