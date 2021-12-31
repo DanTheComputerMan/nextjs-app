@@ -50,7 +50,7 @@ class CalcOutline extends React.Component {
                 //     return this.state.display;
             }
         }
-        console.log('equate', this.state, secnum, result);
+        
         this.setState(prevState => {
             let _arr = prevState.history.slice(); // make copy of old history.
             _arr.push({
@@ -71,7 +71,6 @@ class CalcOutline extends React.Component {
     
     handleClick = (event) => {
         const { name } = event.target;
-        // console.log(name);
         switch (name) {
             case "NA":
                 break;
@@ -139,7 +138,6 @@ class CalcOutline extends React.Component {
                 });
                 break;
             case ".":
-                console.log(this.state);
                 if ((''+this.state.display).includes('.')) return;
                 this.setState(prevState => {
                     if (prevState.stage === 1) {
