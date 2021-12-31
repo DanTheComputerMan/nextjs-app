@@ -58,7 +58,7 @@ class GraphFunctions extends React.Component {
                 mathX = percentX * (xMax - xMin) + xMin;
                 scope.x = mathX;
                 mathY = tree.eval();
-                percentY = (mathY - yMin) / (yMax - yMin);
+                percentY = 1 - ((mathY - yMin) / (yMax - yMin));
                 
                 ctx.lineTo(percentX * canvas.width, percentY * canvas.height);
             }
