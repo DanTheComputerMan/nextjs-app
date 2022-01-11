@@ -8,7 +8,14 @@ class GraphFunctions extends React.Component {
         super();
         this.state = {
             functions: [],
-            functionClasses: []
+            functionClasses: [],
+            bounds: {
+                minusX: -10,
+                plusX: 10,
+                minusY: -10,
+                plusY: 10,
+            },
+            error: false
         };
         // We don't want to use this.state as this.setState takes time to propagate changes and that causes problems with rapidly updating values.
         this.time = 0;
@@ -26,11 +33,21 @@ class GraphFunctions extends React.Component {
         const funcs = this.state.functions.slice();
         // funcs[name.split('.')[1]] = value.replace(/\s/g, '');
         funcs[name.split('.')[1]] = value;
-        this.setState(prevState => {
+        this.setState(() => {
             return {
                 functions : funcs
             }
         });
+    }
+    
+    updateBounds = (props) => {
+        const { name, value } = props.target;
+        this.setState({
+            bounds: {
+                ...this.state.bounds,
+                [name]: value
+            }
+        })
     }
     
     plot = () => {
@@ -52,15 +69,16 @@ class GraphFunctions extends React.Component {
     }
     
     plotFunctions = () => {
+        if (this.error) return;
         let canvas = document.getElementById("myCanvas"),
             ctx = canvas.getContext('2d'),
             math = mathjs(),
             expr,
             scope = { x: 0, y: 0, t: 0, c: 0 },
             tree,
-            n = 100,
-            xMin = -10, xMax = 10,
-            yMin = -10, yMax = 10,
+            n = 100, // "smoothness" of graph, or how many points to plot per function. 100 is plenty for most cases.
+            xMin = +this.state.bounds.minusX, xMax = +this.state.bounds.plusX,
+            yMin = +this.state.bounds.minusY, yMax = +this.state.bounds.plusY,
             percentX, percentY, // percent from 0 to 1.
             mathX, mathY,
             time = 0,
@@ -78,17 +96,16 @@ class GraphFunctions extends React.Component {
         ctx.lineTo(canvas.width / 2, canvas.height);
         ctx.strokeStyle = "gray";
         ctx.stroke();
-        let inc = (xMax-xMin) / 20;
-        // draw markers. Need to do the math for it.
-        for (let i = xMin; i <= xMax; i += inc) {
-            let _xX = xMin + (i * 14.75)+canvas.width/2 + 9, _xY = canvas.height / 2 + 8,
-                _yX = canvas.width / 2 + 2, _yY = yMin + (i * 7.2) + canvas.height/2+8;
+        let xInc = (xMax-xMin) / 20, yInc = (yMax-yMin) / 20, canvasInc = canvas.width / 20;
+        for (let i = 0; i <= 20; i++) { // xMin + i*ii
+            let _xX = (canvas.width/20)*i, _xY = canvas.height/2 + 8,
+                _yX = canvas.width/2 + 2, _yY = (canvas.height/20)*i;
             ctx.fillStyle = "gray";
-            ctx.font = '7px sans-serif'
-            if (i && !(i % 2)) ctx.fillRect(_xX, _xY-12, 1, 3); // Draw x-axis markers.
-            if (-i && !(i % 2)) ctx.fillRect(_yX-6, _yY, 3, 1); // Draw y-axis markers. If -i check to prevent clutter around 0.
-            if (!(i % 2)) ctx.fillText(i, _xX-4, _xY); // Draw x-axis numbers.
-            if (-i && !(i % 2)) ctx.fillText(-i, _yX, _yY+4); // Draw y-axis numbers.
+            ctx.font = "7px sans-serif";
+            if (i != 10 && !(i % 2)) ctx.fillRect(_xX, _xY-12, 1, 3); // Draw x-axis markers.
+            if (i != 10 && !(i % 2)) ctx.fillRect(_yX-6, _yY, 3, 1); // Draw y-axis markers. If -i check to prevent clutter around 0.
+            if (i != 10 && !(i % 2)) ctx.fillText(+(xMin + (i*xInc)).toFixed(1), _xX - canvasInc/3, _xY); // Draw x-axis numbers.
+            if (i != 10 && !(i % 2)) ctx.fillText(+(yMax - (i*yInc)).toFixed(1), _yX, _yY+4); // Draw y-axis numbers.
         }
         ctx.strokeStyle = "black";
         for (let i = 0; i < this.state.functions.length; i++) {
@@ -138,6 +155,26 @@ class GraphFunctions extends React.Component {
                                 value={this.state.functions[1]} onChange={this.functionChange} />
             <GraphFunctionInput className={this.state.functionClasses[2] || classes.functionBox} name="function.2" 
                                 value={this.state.functions[2]} onChange={this.functionChange} />
+            <div style={{
+                    fontSize: "10px"
+            }}>
+                <label>
+                    -x
+                    <input type="text" name="minusX" className={classes.BoundsBox} value={this.state.bounds.minusX}  onChange={this.updateBounds} />
+                </label>
+                <label>
+                    +x
+                    <input type="text" name="plusX" className={classes.BoundsBox} value={this.state.bounds.plusX}  onChange={this.updateBounds} />
+                </label>
+                <label>
+                    -y
+                    <input type="text" name="minusY" className={classes.BoundsBox} value={this.state.bounds.minusY}  onChange={this.updateBounds} />
+                </label>
+                <label>
+                    +y
+                    <input type="text" name="plusY" className={classes.BoundsBox} value={this.state.bounds.plusY}  onChange={this.updateBounds} />
+                </label>
+            </div>
         </div>);
     }
 }

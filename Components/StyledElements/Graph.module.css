@@ -21,6 +21,12 @@
     border: 1px red solid;
 }
 
+.BoundsBox {
+    width: 19px;
+    height: 8px;
+    margin: 0 4px 0 3px;
+}
+
 .functionBox::placeholder {
     /* color: red; */
 }
